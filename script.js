@@ -56,8 +56,7 @@ async function saveTime() {
   await writable.close();
 }
 
-//todo: Build array structure that is easily json's that can include the client, time spent this month, and time allocation
-//must be able to easily add multiple clients
+//todo add update feature that updates time spent as it happens so user doesn't have to refresh
 
 function getElapsedSeconds(start) {
   let now = Date.now();
@@ -70,7 +69,7 @@ function timeTrack(e) {
   let initialTime = Number(document.querySelector(`.time-spent-${e.target.id}`).getAttribute("data-time"));
   if (button.getAttribute("timer-status") == "paused") {
     button.setAttribute("timer-status", "counting");
-    button.parentNode.classList.add("actively-tracking");
+    button.parentNode.parentNode.classList.add("actively-tracking");
     button.innerText = "Stop Time";
 
     const startTime = Date.now();
@@ -89,6 +88,23 @@ function timeTrack(e) {
     button.innerText = "Start Time";
     button.parentNode.classList.remove("actively-tracking");
     clearInterval(button.dataset.intervalId);
+  }
+}
+
+function microUpdate(e) {
+  let initialTime = Number(document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).getAttribute("data-time"));
+  if (e.target.classList.contains("add-time")) {
+    //add 30 minutes
+    document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).setAttribute("data-time", initialTime + 1800);
+  } else {
+    //subtract 30 minutes
+    //check if it would go negative, if it would set to zero
+    //otherwise reduce by 30 minutes
+    if (initialTime - 1800 < 0) {
+      document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).setAttribute("data-time", 0);
+    } else {
+      document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).setAttribute("data-time", initialTime - 1800);
+    }
   }
 }
 
@@ -111,12 +127,12 @@ async function openTime() {
   updatedtime.forEach((elm) => {
     document.querySelector(".clientHolder").insertAdjacentHTML(
       "beforebegin",
-      ` <div class="client-info"><div class="client-name">${elm.client}</div><button id="${elm.empID}" class="time-track" timer-status="paused">Start Time</button> <div class="time-spent-${
-        elm.empID
-      }" data-time="${elm.timeSpent}">${formatTime(elm.timeSpent)}</div> <div class="time-allocated-${elm.empID}" data-allocated="${elm.timeAllocation}">${percentAllocationSpent(
-        elm.timeSpent,
-        elm.timeAllocation
-      )}%</div>
+      ` <div class="client-info"><div class="client-name">${elm.client}</div><div class="timeModify"><button id="${elm.empID}" class="time-track" timer-status="paused">Start Time</button> 
+     <button class="add-time" data-client="${elm.empID}">+ 30</button>
+      
+      <button class="sub-time" data-client="${elm.empID}">- 30</button></div><div class="time-spent-${elm.empID}" data-time="${elm.timeSpent}">${formatTime(
+        elm.timeSpent
+      )}</div> <div class="time-allocated-${elm.empID}" data-allocated="${elm.timeAllocation}">${percentAllocationSpent(elm.timeSpent, elm.timeAllocation)}%</div>
         </div>`
     );
 
@@ -124,6 +140,9 @@ async function openTime() {
   });
   document.querySelectorAll(".time-track").forEach((elm) => {
     elm.addEventListener("click", timeTrack);
+  });
+  document.querySelectorAll(`[class$="-time"]`).forEach((elm) => {
+    elm.addEventListener("click", microUpdate);
   });
 
   return contents;

@@ -1,7 +1,7 @@
 .client-info,
 .titles {
   display: grid;
-  grid-template-columns: 70px 100px 80px 80px;
+  grid-template-columns: 70px 120px 76px 40px;
   margin: 20px 0 0 0;
   padding: 10px;
   gap: 10px;
@@ -48,4 +48,22 @@
 
 .hide {
   display: none;
+}
+
+.timeModify {
+  display: grid;
+  grid-template-areas:
+    "startTime addTime "
+    "startTime subTime";
+}
+
+.time-track {
+  grid-area: startTime;
+}
+
+.add-time {
+  grid-area: addTime;
+}
+.sub-time {
+  grid-area: subTime;
 }
