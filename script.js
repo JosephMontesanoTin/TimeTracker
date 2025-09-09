@@ -22,6 +22,12 @@ function percentAllocationSpent(timeSpent, allocationAmount) {
   return percent;
 }
 
+function updateTimeForClient(clientId) {
+  //used for when time is added or lost to client to update in real time to show to users
+  let initialTime = Number(document.querySelector(`.time-spent-${clientId}`).getAttribute("data-time"));
+  document.querySelector(`.time-spent-${clientId}`).innerText = formatTime(initialTime);
+}
+
 async function saveTime() {
   console.log("Saving Time");
   const options = {
@@ -51,7 +57,6 @@ async function saveTime() {
     });
   });
 
-  console.log(realTime);
   await writable.write(JSON.stringify(realTime));
   await writable.close();
 }
@@ -86,7 +91,8 @@ function timeTrack(e) {
     document.querySelector(`.time-spent-${e.target.id}`).setAttribute("data-time", Number(initialTime) + getElapsedSeconds(Number(button.dataset.startTime)));
     button.setAttribute("timer-status", "paused");
     button.innerText = "Start Time";
-    button.parentNode.classList.remove("actively-tracking");
+    button.parentNode.parentNode.classList.remove("actively-tracking");
+    updateTimeForClient(e.target.id);
     clearInterval(button.dataset.intervalId);
   }
 }
@@ -106,6 +112,7 @@ function microUpdate(e) {
       document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).setAttribute("data-time", initialTime - 1800);
     }
   }
+  updateTimeForClient(e.srcElement.dataset.client);
 }
 
 async function openTime() {
@@ -165,7 +172,6 @@ function generateReport() {
 }
 
 function closeReport() {
-  console.log("CLICKED");
   document.querySelector(".report").classList.add("hide");
   document.querySelectorAll(".report > .client-report").forEach((elm) => {
     elm.remove();
