@@ -1,0 +1,51 @@
+.client-info,
+.titles {
+  display: grid;
+  grid-template-columns: 70px 100px 80px 80px;
+  margin: 20px 0 0 0;
+  padding: 10px;
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.titles {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.actively-tracking {
+  background-color: rgba(247, 243, 43, 0.623);
+}
+
+.client-report {
+  display: grid;
+  grid-template-columns: 70px 100px 120px;
+  margin: 20px 0 0 0;
+  padding: 10px;
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 80vw;
+  background: #e3ded9;
+}
+
+.report {
+  position: fixed;
+  background-color: gray;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hide {
+  display: none;
+}
