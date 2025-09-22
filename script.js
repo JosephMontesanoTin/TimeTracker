@@ -72,6 +72,7 @@ function getElapsedSeconds(start) {
 function timeTrack(e) {
   let button = document.querySelector(`#${e.target.id}`);
   let initialTime = Number(document.querySelector(`.time-spent-${e.target.id}`).getAttribute("data-time"));
+  let timeAllocated = Number(document.querySelector(`.time-allocated-${e.target.id}`).getAttribute("data-allocated"));
   if (button.getAttribute("timer-status") == "paused") {
     button.setAttribute("timer-status", "counting");
     button.parentNode.parentNode.classList.add("actively-tracking");
@@ -83,7 +84,9 @@ function timeTrack(e) {
     const intervalId = setInterval(() => {
       //current number of total seconds
       const totalTime = initialTime + getElapsedSeconds(startTime);
+
       document.querySelector(`.time-spent-${e.target.id}`).innerText = formatTime(totalTime);
+      document.querySelector(`.time-allocated-${e.target.id}`).innerText = `${percentAllocationSpent(totalTime, timeAllocated)}%`;
       //document.querySelector(`.time-spent-${e.target.id}`).setAttribute("data-time", totalTime);
     }, 1000);
     button.dataset.intervalId = intervalId;
@@ -99,9 +102,11 @@ function timeTrack(e) {
 
 function microUpdate(e) {
   let initialTime = Number(document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).getAttribute("data-time"));
+  let timeAllocated = Number(document.querySelector(`.time-allocated-${e.srcElement.dataset.client}`).getAttribute("data-allocated"));
   if (e.target.classList.contains("add-time")) {
     //add 30 minutes
     document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).setAttribute("data-time", initialTime + 1800);
+    document.querySelector(`.time-allocated-${e.srcElement.dataset.client}`).innerText = `${percentAllocationSpent(initialTime + 1800, timeAllocated)}%`;
   } else {
     //subtract 30 minutes
     //check if it would go negative, if it would set to zero
@@ -110,6 +115,7 @@ function microUpdate(e) {
       document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).setAttribute("data-time", 0);
     } else {
       document.querySelector(`.time-spent-${e.srcElement.dataset.client}`).setAttribute("data-time", initialTime - 1800);
+      document.querySelector(`.time-allocated-${e.srcElement.dataset.client}`).innerText = `${percentAllocationSpent(initialTime - 1800, timeAllocated)}%`;
     }
   }
   updateTimeForClient(e.srcElement.dataset.client);
