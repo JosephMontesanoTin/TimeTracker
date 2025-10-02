@@ -1,12 +1,12 @@
 let time = [
-  { client: "Tin Internal", croName: "Placeholder", timeSpent: "15000", timeAllocation: "18000", empID: "tinInt" },
-  { client: "Tin Meeting", croName: "Placeholder", timeSpent: "2063", timeAllocation: "18000", empID: "tinMeet" },
-  { client: "Nocturne", croName: "Placeholder", timeSpent: "3600", timeAllocation: "57600", empID: "noc" },
-  { client: "Hansons", croName: "Placeholder", timeSpent: "3600", timeAllocation: "86400", empID: "han" },
-  { client: "Rowan", croName: "Placeholder", timeSpent: "1218", timeAllocation: "86400", empID: "row" },
-  { client: "Parts Town", croName: "Placeholder", timeSpent: "14000", timeAllocation: "144000", empID: "pt" },
-  { client: "Life Stance", croName: "Placeholder", timeSpent: "716", timeAllocation: "57600", empID: "ls" },
-  { client: "Us Polo", croName: "Placeholder", timeSpent: "33", timeAllocation: "28800", empID: "usp" },
+  { client: "Tin Internal", croName: "Placeholder", timeSpent: "0", timeAllocation: "18000", empID: "tinInt" },
+  { client: "Tin Meeting", croName: "Placeholder", timeSpent: "0", timeAllocation: "18000", empID: "tinMeet" },
+  { client: "Nocturne", croName: "Placeholder", timeSpent: "0", timeAllocation: "57600", empID: "noc" },
+  { client: "Hansons", croName: "Placeholder", timeSpent: "0", timeAllocation: "86400", empID: "han" },
+  { client: "Rowan", croName: "Placeholder", timeSpent: "0", timeAllocation: "86400", empID: "row" },
+  { client: "Parts Town", croName: "Placeholder", timeSpent: "0", timeAllocation: "144000", empID: "pt" },
+  { client: "Life Stance", croName: "Placeholder", timeSpent: "0", timeAllocation: "57600", empID: "ls" },
+  { client: "Us Polo", croName: "Placeholder", timeSpent: "0", timeAllocation: "28800", empID: "usp" },
 ];
 
 function formatTime(totalSeconds) {
